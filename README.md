@@ -1,54 +1,43 @@
-# java-gui
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
 
 public class Plate4x4Frame extends JFrame {
-    public Plate4x4Frame() {
-        setTitle("4x4 Color Grid");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    private Color[] colors = {
+        Color.RED, Color.ORANGE, Color.YELLOW, Color.GREEN,
+        Color.CYAN, Color.BLUE, Color.MAGENTA, Color.GRAY,
+        Color.PINK, Color.LIGHT_GRAY, Color.RED, Color.ORANGE,
+        Color.YELLOW, Color.GREEN, Color.CYAN, Color.BLUE
+    };
 
-        // 전체 레이아웃을 BorderLayout으로 설정
+    public Plate4x4Frame() {
+        super("2022011860-김규원");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
-        // ====== 위쪽 4x4 색상 패널 ======
-        JPanel gridPanel = new JPanel(new GridLayout(4, 4));
-        Color[] colors = {
-                Color.WHITE, Color.GRAY, Color.RED, Color.ORANGE,
-                Color.YELLOW, Color.GREEN, Color.CYAN, Color.BLUE,
-                Color.PINK, Color.MAGENTA, Color.LIGHT_GRAY, Color.DARK_GRAY,
-                Color.BLACK, Color.YELLOW, Color.GREEN, Color.RED
-        };
+        add(new Plate(colors), BorderLayout.CENTER);
+        add(new PlateButton(), BorderLayout.SOUTH);
 
-        for (int i = 0; i < 16; i++) {
-            JLabel label = new JLabel(String.valueOf(i+1), SwingConstants.CENTER);
-            label.setOpaque(true);
-            label.setBackground(colors[i]);
-            gridPanel.add(label);
-        }
-
-        // ====== 아래쪽 입력 + 버튼 패널 ======
-        JPanel bottomPanel = new JPanel(); // FlowLayout 기본
-        JTextField textField = new JTextField(10); // 텍스트 입력창
-        JButton checkButton = new JButton("색상확인"); // 버튼
-
-        // 버튼 클릭 이벤트
-        checkButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                String input = textField.getText(); // 입력값 읽기
-                JOptionPane.showMessageDialog(null, "입력한 색상: " + input);
-            }
-        });
-
-        bottomPanel.add(textField);
-        bottomPanel.add(checkButton);
-
-        // ====== 프레임에 추가 ======
-        add(gridPanel, BorderLayout.CENTER);
-        add(bottomPanel, BorderLayout.SOUTH);
-
-        setSize(500, 250);
+        setSize(500, 300);
         setVisible(true);
+    }
+
+    class Plate extends JPanel {
+        public Plate(Color[] colors) {
+            setLayout(new GridLayout(4, 4));
+            for (int i = 0; i < 16; i++) {
+                JLabel label = new JLabel(Integer.toString(i), SwingConstants.CENTER);
+                label.setOpaque(true);
+                label.setBackground(colors[i]);
+                add(label);
+            }
+        }
+    }
+
+    class PlateButton extends JPanel {
+        public PlateButton() {
+            add(new JButton("색상확인"));
+            add(new JTextField(10));
+        }
     }
 
     public static void main(String[] args) {
