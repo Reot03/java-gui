@@ -1,0 +1,55 @@
+package prog09_09;
+
+import java.awt.*;
+import javax.swing.*;
+
+public class MultiplePanelFrame extends JFrame {
+	public MultiplePanelFrame() {
+		super("2022011984-전우진");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		Container c = getContentPane();
+		c.setLayout(new BorderLayout());
+		
+		JPanel north = new JPanel();
+		north.add(new JLabel("별 개수"));
+		north.add(new JTextField(5));
+		north.add(new JButton("별 만들기"));
+		c.add(north, BorderLayout.NORTH);
+		
+		
+		
+		JPanel center = new JPanel(null);
+		center.setBackground(Color.white);
+		c.add(center, BorderLayout.CENTER);
+		
+		JButton re = new JButton("Refresh");
+		re.setSize(80,40);
+		re.setLocation(10,10);
+		center.add(re);
+		
+		for (int i=0; i<15; i++) {
+			JLabel star = new JLabel("*");
+			star.setSize(getPreferredSize());
+			int x = (int)(Math.random()*280);
+			int y = (int)(Math.random()*180);
+			star.setLocation(x,y);
+			star.setForeground(Color.RED);
+			center.add(star);
+		}
+		
+		JPanel south = new JPanel();
+		south.add(new JButton("Exit"));
+		south.setBackground(Color.yellow);
+		c.add(south, BorderLayout.SOUTH);
+		
+		setSize(400,300);
+		setVisible(true);		
+	}
+
+	public static void main(String[] args) {
+		new MultiplePanelFrame();
+		// TODO Auto-generated method stub
+
+	}
+
+}
