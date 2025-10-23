@@ -10,7 +10,7 @@ public class Plate4x4Frame extends JFrame {
     };
 
     public Plate4x4Frame() {
-        super("2022011860-김규원");
+        super("2022011860-전우진");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
