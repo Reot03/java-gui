@@ -1,0 +1,68 @@
+import java.awt.*;
+import javax.swing.*;
+import javax.swing.event.*;
+
+public class JSliderPractice2Frame extends JFrame {
+
+    private JSlider rSlider, gSlider, bSlider;
+    private JLabel label;
+
+    public JSliderPractice2Frame() {
+        setTitle("JSlider Practice 2 Frame");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLayout(new BorderLayout());
+
+        // NORTH: 슬라이더 3개 (R/G/B)
+        JPanel north = new JPanel(new GridLayout(3, 1));
+
+        rSlider = makeSlider(); north.add(rSlider);
+        gSlider = makeSlider(); north.add(gSlider);
+        bSlider = makeSlider(); north.add(bSlider);
+
+        add(north, BorderLayout.NORTH);
+
+        // CENTER: 라벨
+        label = new JLabel("Love Java", SwingConstants.CENTER);
+        label.setFont(new Font("Arial", Font.BOLD, 40));
+        add(label, BorderLayout.CENTER);
+
+        // 공용 리스너 (세 슬라이더 모두에 부착)
+        ChangeListener listener = new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                updateColor();
+            }
+        };
+        rSlider.addChangeListener(listener);
+        gSlider.addChangeListener(listener);
+        bSlider.addChangeListener(listener);
+
+        // 초기 색 적용
+        updateColor();
+
+        setSize(400, 400);
+        setVisible(true);
+    }
+
+    // 슬라이더 공통 설정 (0~255, major 20, minor 5, 눈금/라벨 표시)
+    private JSlider makeSlider() {
+        JSlider s = new JSlider(0, 255, 0);
+        s.setMajorTickSpacing(20);
+        s.setMinorTickSpacing(5);
+        s.setPaintTicks(true);
+        s.setPaintLabels(true);
+        return s;
+    }
+
+    // 현재 슬라이더 값으로 라벨 색 갱신
+    private void updateColor() {
+        int r = rSlider.getValue();
+        int g = gSlider.getValue();
+        int b = bSlider.getValue();
+        label.setForeground(new Color(r, g, b));
+    }
+
+    public static void main(String[] args) {
+        new JSliderPractice2Frame();
+    }
+}
