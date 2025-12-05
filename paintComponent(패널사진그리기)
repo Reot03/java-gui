@@ -1,0 +1,57 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+public class ImageHideShow extends JFrame {
+
+    private MyPanel panel = new MyPanel();
+    private JButton btn = new JButton("Hide/Show");
+
+    public ImageHideShow() {
+        setTitle("이미지 숨기기/보이기");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(600, 500);
+
+        setLayout(new BorderLayout());
+
+        // 버튼 영역
+        JPanel topPanel = new JPanel();
+        topPanel.add(btn);
+        add(topPanel, BorderLayout.NORTH);
+
+        // 그림 패널
+        add(panel, BorderLayout.CENTER);
+
+        // 버튼 눌렀을 때 이미지 보임/숨김 토글
+        btn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                panel.visible = !panel.visible;   // 상태 바꿈
+                repaint();                        // 화면 다시 그리기
+            }
+        });
+
+        setVisible(true);
+    }
+
+    // 실제 그림 그리는 내부 패널
+    class MyPanel extends JPanel {
+
+        Image img = new ImageIcon("back.jpg").getImage();
+        boolean visible = true;   // 처음에는 보임
+
+        @Override
+        protected void paintComponent(Graphics g) {
+            super.paintComponent(g);
+
+            if (visible) {
+                // 패널 크기에 맞춰 그림
+                g.drawImage(img, 0, 0, getWidth(), getHeight(), this);
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        new ImageHideShow();
+    }
+}
