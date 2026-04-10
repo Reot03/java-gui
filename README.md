@@ -1,46 +1,61 @@
-import javax.swing.*;
-import java.awt.*;
+<%@ page language="java" contentType="text/html; charset=UTF-8" %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>학생 성적</title>
+</head>
+<body>
 
-public class Plate4x4Frame extends JFrame {
-    private Color[] colors = {
-        Color.RED, Color.ORANGE, Color.YELLOW, Color.GREEN,
-        Color.CYAN, Color.BLUE, Color.MAGENTA, Color.GRAY,
-        Color.PINK, Color.LIGHT_GRAY, Color.RED, Color.ORANGE,
-        Color.YELLOW, Color.GREEN, Color.CYAN, Color.BLUE
-    };
+<%
+int score[][] = {
+    {86,79,65,98,60},
+    {45,67,58,87,83},
+    {79,83,89,67,98},
+    {97,99,98,83,88},
+    {67,54,72,54,52}
+};
 
-    public Plate4x4Frame() {
-        super("2022011860-전우진");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLayout(new BorderLayout());
+double[] avg = new double[5];
+String[] grades = new String[5];
 
-        add(new Plate(colors), BorderLayout.CENTER);
-        add(new PlateButton(), BorderLayout.SOUTH);
+// 평균 + 학점 계산
+for (int i = 0; i < score.length; i++) {
+    int sum = 0;
 
-        setSize(500, 300);
-        setVisible(true);
+    for (int j = 0; j < score[i].length; j++) {
+        sum += score[i][j];
     }
 
-    class Plate extends JPanel {
-        public Plate(Color[] colors) {
-            setLayout(new GridLayout(4, 4));
-            for (int i = 0; i < 16; i++) {
-                JLabel label = new JLabel(Integer.toString(i), SwingConstants.CENTER);
-                label.setOpaque(true);
-                label.setBackground(colors[i]);
-                add(label);
-            }
-        }
-    }
+    avg[i] = sum / 5.0;
 
-    class PlateButton extends JPanel {
-        public PlateButton() {
-            add(new JButton("색상확인"));
-            add(new JTextField(10));
-        }
-    }
-
-    public static void main(String[] args) {
-        new Plate4x4Frame();
-    }
+    if (avg[i] >= 90) grades[i] = "A";
+    else if (avg[i] >= 80) grades[i] = "B";
+    else if (avg[i] >= 70) grades[i] = "C";
+    else if (avg[i] >= 60) grades[i] = "D";
+    else grades[i] = "F";
 }
+%>
+
+<h3>4. 학생별 평균 구하기</h3>
+
+<%
+for (int i = 0; i < avg.length; i++) {
+%>
+    학생<%= i+1 %>의 평균 : <%= avg[i] %><br>
+<%
+}
+%>
+
+<h3>5. 학생별 학점 출력하기</h3>
+
+<%
+for (int i = 0; i < grades.length; i++) {
+%>
+    학생<%= i+1 %>의 학점 : <%= grades[i] %><br>
+<%
+}
+%>
+
+</body>
+</html>
